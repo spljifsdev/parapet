@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Additional responsive hints -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://parapet-pub.xyz">
+    <title>Drink Categories</title>
+    <!-- Preload and async loading of stylesheets -->
+    <link rel="preload" href="/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+</head>
+<body>
+  <div class="language-selector">
+    <form action="/change-language" method="get">
+      <select 
+        name="lang" 
+        onchange="this.form.submit()" 
+        class="lang"
+      >
+        <% languages.forEach(lang => { %>
+          <option 
+            value="<%= lang %>" 
+            <%= currentLang === lang ? 'selected' : '' %>
+          >
+            <%= lang.toUpperCase() %>
+          </option>
+        <% }); %>
+      </select>
+    </form>
+  </div>
+  
+    
+  
+    <div class="navbar">
+      <div class="brand">
+        <img src="/img/parapetBg.webp" alt="Parapet Pub Logo">
+      </div>
+    </div>
+  
+    <div class="category-container">
+      <h1><%= t.pricelist %></h1>
+        <% for( let cat of pricelist ) { %>
+            <div class="category">
+                <div class="cat-header" onclick="toggleDrinks('<%= cat.id %>')" >
+                    <!-- <img src="/img/<%= cat.img %>" alt="<%= cat.category %>"> -->
+                    <h2 class="cheading"><%= cat.category[currentLang] %></h2>
+                </div>
+                <div id="<%= cat.id %>" class="cat-drinks">
+                    <% for( let drink of cat.drinks) { %>
+                        <div class="cat-drink">
+                            <div><%= drink.name %><br/> <span><%= drink.size %></span></div>
+                            <div><%= drink.price %> €</div>
+                        </div>
+                    <% } %>
+                </div>
+                
+            </div>
+        <% } %>
+    </div>
+      
+  
+
+  <script src="/js/script.js"></script>
+</body>
+</html>
